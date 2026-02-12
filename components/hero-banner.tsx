@@ -17,6 +17,10 @@ export function HeroBanner({ movies, onMovieClick }: HeroBannerProps) {
   const [current, setCurrent] = useState(0)
   const [isTransitioning, setIsTransitioning] = useState(false)
 
+  // Debug logging
+  console.log('HeroBanner received movies:', movies)
+  console.log('HeroBanner movies.length:', movies?.length)
+
   const goToSlide = useCallback(
     (index: number) => {
       if (isTransitioning) return
@@ -37,28 +41,52 @@ export function HeroBanner({ movies, onMovieClick }: HeroBannerProps) {
   }, [current, movies.length, goToSlide])
 
   const movie = movies[current]
+  
+  console.log('Current index:', current)
+  console.log('Current movie:', movie)
+  console.log('Movie banner:', movie?.banner)
+  console.log('Movie thumbnail:', movie?.thumbnail)
+
+  // Don't render if no movies available
+  if (!movie || movies.length === 0) {
+    console.log('HeroBanner: No movies to display')
+    return (
+      <section className="relative h-[50vh] min-h-[400px] w-full overflow-hidden sm:h-[60vh] lg:h-[70vh] bg-muted/20 flex items-center justify-center">
+        <p className="text-muted-foreground">Loading featured movies...</p>
+      </section>
+    )
+  }
+
+  console.log('HeroBanner: Rendering with movie:', movie.title)
 
   return (
     <section className="relative h-[50vh] min-h-[400px] w-full overflow-hidden sm:h-[60vh] lg:h-[70vh]">
       {/* Background Image */}
-      {movies.map((m, i) => (
-        <div
-          key={m.id}
-          className={cn(
-            "absolute inset-0 transition-opacity duration-700",
-            i === current ? "opacity-100" : "opacity-0"
-          )}
-        >
-          <Image
-            src={m.banner || m.thumbnail}
-            alt={m.title}
-            fill
-            className="object-cover"
-            priority={i === 0}
-            sizes="100vw"
-          />
-        </div>
-      ))}
+      {movies.map((m, i) => {
+        const imageUrl = m.banner || m.thumbnail
+        console.log(`Movie ${i} (${m.title}):`, { banner: m.banner, thumbnail: m.thumbnail, using: imageUrl })
+        return (
+          <div
+            key={m.id}
+            className={cn(
+              "absolute inset-0 transition-opacity duration-700",
+              i === current ? "opacity-100" : "opacity-0"
+            )}
+          >
+            <Image
+              src={imageUrl}
+              alt={m.title}
+              fill
+              className="object-cover"
+              priority={i === 0}
+              sizes="100vw"
+              onError={(e) => {
+                console.error(`Failed to load image for ${m.title}:`, imageUrl)
+              }}
+            />
+          </div>
+        )
+      })}
 
       {/* Overlay */}
       <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
@@ -74,7 +102,6 @@ export function HeroBanner({ movies, onMovieClick }: HeroBannerProps) {
         <div className="mx-auto w-full max-w-7xl px-4 pb-12 lg:px-8 lg:pb-16">
           <div className="flex max-w-2xl flex-col gap-4">
             <div className="flex items-center gap-2">
-              <Badge className="bg-primary text-primary-foreground border-transparent">{movie.rating}</Badge>
               <Badge variant="outline" className="border-foreground/20 text-foreground/80">
                 {movie.genre}
               </Badge>

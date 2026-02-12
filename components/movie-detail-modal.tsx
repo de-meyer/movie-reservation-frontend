@@ -58,7 +58,6 @@ export function MovieDetailModal({ movie, open, onOpenChange }: MovieDetailModal
             </div>
             <div className="flex flex-col gap-1">
               <div className="flex flex-wrap items-center gap-2">
-                <Badge className="bg-primary text-primary-foreground border-transparent">{movie.rating}</Badge>
                 <Badge variant="outline" className="border-foreground/20 text-foreground/80">
                   {movie.genre}
                 </Badge>

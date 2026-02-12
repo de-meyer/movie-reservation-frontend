@@ -4,7 +4,6 @@ export interface Movie {
   description: string
   genre: string
   duration: string
-  rating: string
   director: string
   cast: string[]
   thumbnail: string
@@ -43,7 +42,6 @@ export const featuredMovies: Movie[] = [
       "Set 10,000 years before the events of Dune, this epic saga follows the Harkonnen Sisters as they establish the secretive order known as the Bene Gesserit to combat an existential threat to humankind.",
     genre: "Sci-Fi / Drama",
     duration: "2h 45min",
-    rating: "PG-13",
     director: "Denis Villeneuve",
     cast: ["Timothee Chalamet", "Zendaya", "Rebecca Ferguson"],
     thumbnail: "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=600&h=900&fit=crop",
@@ -63,7 +61,6 @@ export const featuredMovies: Movie[] = [
       "A gripping thriller where a firefighter discovers a conspiracy hidden beneath the ashes of a devastating wildfire that threatens to expose the corrupt elite of a small mountain town.",
     genre: "Thriller / Action",
     duration: "2h 12min",
-    rating: "R",
     director: "Christopher Nolan",
     cast: ["Oscar Isaac", "Florence Pugh", "Idris Elba"],
     thumbnail: "https://images.unsplash.com/photo-1485846234645-a62644f84728?w=600&h=900&fit=crop",
@@ -83,7 +80,6 @@ export const featuredMovies: Movie[] = [
       "An enchanting fantasy adventure where a young botanist discovers a hidden garden that blooms only at midnight, unlocking a portal to a parallel world filled with magical creatures.",
     genre: "Fantasy / Adventure",
     duration: "2h 05min",
-    rating: "PG",
     director: "Guillermo del Toro",
     cast: ["Saoirse Ronan", "Dev Patel", "Cate Blanchett"],
     thumbnail: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=600&h=900&fit=crop",
@@ -103,7 +99,6 @@ export const featuredMovies: Movie[] = [
       "In a dystopian future, a rogue engineer builds an underground resistance against a totalitarian regime using repurposed machines, sparking a revolution that could change the world forever.",
     genre: "Sci-Fi / Action",
     duration: "2h 20min",
-    rating: "PG-13",
     director: "Ridley Scott",
     cast: ["Pedro Pascal", "Lupita Nyong'o", "Tom Hardy"],
     thumbnail: "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=600&h=900&fit=crop",
@@ -127,7 +122,6 @@ export const todayMovies: Movie[] = [
       "A courtroom drama that follows a deaf lawyer who must prove the innocence of a wrongly accused man using only visual evidence in a case that captivates the entire nation.",
     genre: "Drama / Thriller",
     duration: "1h 58min",
-    rating: "PG-13",
     director: "Greta Gerwig",
     cast: ["Margot Robbie", "Rami Malek", "Viola Davis"],
     thumbnail: "https://images.unsplash.com/photo-1440404653325-ab127d49abc1?w=600&h=900&fit=crop",
@@ -144,7 +138,6 @@ export const todayMovies: Movie[] = [
       "A visually stunning space opera where a crew of misfit astronauts discovers an alien signal originating from a nebula, leading them on a perilous journey to the edge of the known universe.",
     genre: "Sci-Fi / Adventure",
     duration: "2h 35min",
-    rating: "PG-13",
     director: "James Cameron",
     cast: ["John Boyega", "Zoe Saldana", "Ana de Armas"],
     thumbnail: "https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?w=600&h=900&fit=crop",
@@ -161,7 +154,6 @@ export const todayMovies: Movie[] = [
       "A heart-pounding submarine thriller where the crew must navigate deadly waters and internal conflict when their captain receives conflicting orders during an international crisis.",
     genre: "Action / Thriller",
     duration: "2h 08min",
-    rating: "R",
     director: "Kathryn Bigelow",
     cast: ["Michael B. Jordan", "Daniel Kaluuya", "Jenna Ortega"],
     thumbnail: "https://images.unsplash.com/photo-1478720568477-152d9b164e26?w=600&h=900&fit=crop",
@@ -178,7 +170,6 @@ export const todayMovies: Movie[] = [
       "A poetic romance set in 1920s Ireland, following two star-crossed lovers whose forbidden relationship defies the social and political turmoil of their time.",
     genre: "Romance / Drama",
     duration: "1h 52min",
-    rating: "PG-13",
     director: "Barry Jenkins",
     cast: ["Andrew Garfield", "Lily James", "Cillian Murphy"],
     thumbnail: "https://images.unsplash.com/photo-1595769816263-9b910be24d5f?w=600&h=900&fit=crop",
@@ -202,7 +193,6 @@ export const tomorrowMovies: Movie[] = [
       "A mind-bending heist film where a team of architects design an impossible building as a cover for the greatest art theft in history, blending reality and illusion.",
     genre: "Thriller / Mystery",
     duration: "2h 15min",
-    rating: "PG-13",
     director: "David Fincher",
     cast: ["Ryan Gosling", "Anya Taylor-Joy", "Oscar Isaac"],
     thumbnail: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&h=900&fit=crop",
@@ -219,7 +209,6 @@ export const tomorrowMovies: Movie[] = [
       "A cyberpunk noir detective story set in a rain-soaked megacity where a jaded investigator uncovers a conspiracy that blurs the lines between human consciousness and AI.",
     genre: "Sci-Fi / Noir",
     duration: "2h 22min",
-    rating: "R",
     director: "Denis Villeneuve",
     cast: ["Keanu Reeves", "Tilda Swinton", "Dev Patel"],
     thumbnail: "https://images.unsplash.com/photo-1594909122845-11baa439b7bf?w=600&h=900&fit=crop",
@@ -236,7 +225,6 @@ export const tomorrowMovies: Movie[] = [
       "A sweeping period drama about a pioneering photographer in 1890s California whose work capturing the last wild landscapes ignites a conservation movement.",
     genre: "Drama / Historical",
     duration: "2h 01min",
-    rating: "PG",
     director: "Terrence Malick",
     cast: ["Cate Blanchett", "Brad Pitt", "Saoirse Ronan"],
     thumbnail: "https://images.unsplash.com/photo-1460881680858-30d872d5b530?w=600&h=900&fit=crop",
