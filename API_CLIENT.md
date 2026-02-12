@@ -13,6 +13,7 @@ pnpm run generate:api
 ```
 
 This will fetch the OpenAPI spec from `http://localhost:8080/api/openapi.json` and generate:
+
 - TypeScript types in `lib/api/models/`
 - React Query hooks in `lib/api/endpoints/`
 
@@ -21,7 +22,7 @@ This will fetch the OpenAPI spec from `http://localhost:8080/api/openapi.json` a
 The generated hooks follow React Query conventions:
 
 ```tsx
-import { useGetMovies } from '@/lib/api/endpoints/movies';
+import { useGetMovies } from "@/lib/api/endpoints/movies";
 
 export function MovieList() {
   const { data, isLoading, error } = useGetMovies();
@@ -31,7 +32,7 @@ export function MovieList() {
 
   return (
     <div>
-      {data?.map(movie => (
+      {data?.map((movie) => (
         <div key={movie.id}>{movie.title}</div>
       ))}
     </div>
@@ -42,12 +43,14 @@ export function MovieList() {
 ## Configuration
 
 Edit `orval.config.ts` to customize:
+
 - Output directories
 - Naming conventions
 - HTTP client configuration
 - And more...
 
 The custom HTTP client is defined in `lib/api/mutator.ts` and can be modified to add:
+
 - Authentication headers
 - Request/response interceptors
 - Error handling
