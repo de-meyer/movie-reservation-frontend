@@ -17,10 +17,6 @@ export function HeroBanner({ movies, onMovieClick }: HeroBannerProps) {
   const [current, setCurrent] = useState(0)
   const [isTransitioning, setIsTransitioning] = useState(false)
 
-  // Debug logging
-  console.log('HeroBanner received movies:', movies)
-  console.log('HeroBanner movies.length:', movies?.length)
-
   const goToSlide = useCallback(
     (index: number) => {
       if (isTransitioning) return
@@ -41,11 +37,6 @@ export function HeroBanner({ movies, onMovieClick }: HeroBannerProps) {
   }, [current, movies.length, goToSlide])
 
   const movie = movies[current]
-  
-  console.log('Current index:', current)
-  console.log('Current movie:', movie)
-  console.log('Movie banner:', movie?.banner)
-  console.log('Movie thumbnail:', movie?.thumbnail)
 
   // Don't render if no movies available
   if (!movie || movies.length === 0) {
@@ -64,7 +55,6 @@ export function HeroBanner({ movies, onMovieClick }: HeroBannerProps) {
       {/* Background Image */}
       {movies.map((m, i) => {
         const imageUrl = m.banner || m.thumbnail
-        console.log(`Movie ${i} (${m.title}):`, { banner: m.banner, thumbnail: m.thumbnail, using: imageUrl })
         return (
           <div
             key={m.id}

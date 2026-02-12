@@ -1,37 +1,41 @@
-"use client"
+"use client";
 
-import Image from "next/image"
-import { Clock, MapPin, Calendar, Users } from "lucide-react"
+import Image from "next/image";
+import { Clock, MapPin, Calendar, Users } from "lucide-react";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogDescription,
-} from "@/components/ui/dialog"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { ScrollArea } from "@/components/ui/scroll-area"
-import { Separator } from "@/components/ui/separator"
-import type { Movie } from "@/lib/mock-data"
+} from "@/components/ui/dialog";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Separator } from "@/components/ui/separator";
+import type { Movie } from "@/lib/mock-data";
 
 interface MovieDetailModalProps {
-  movie: Movie | null
-  open: boolean
-  onOpenChange: (open: boolean) => void
+  movie: Movie | null;
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
 }
 
-export function MovieDetailModal({ movie, open, onOpenChange }: MovieDetailModalProps) {
-  if (!movie) return null
+export function MovieDetailModal({
+  movie,
+  open,
+  onOpenChange,
+}: MovieDetailModalProps) {
+  if (!movie) return null;
 
   const showtimesByDate = movie.showtimes.reduce(
     (acc, st) => {
-      if (!acc[st.date]) acc[st.date] = []
-      acc[st.date].push(st)
-      return acc
+      if (!acc[st.date]) acc[st.date] = [];
+      acc[st.date].push(st);
+      return acc;
     },
-    {} as Record<string, typeof movie.showtimes>
-  )
+    {} as Record<string, typeof movie.showtimes>,
+  );
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -58,7 +62,9 @@ export function MovieDetailModal({ movie, open, onOpenChange }: MovieDetailModal
             </div>
             <div className="flex flex-col gap-1">
               <div className="flex flex-wrap items-center gap-2">
-                <Badge variant="outline" className="border-foreground/20 text-foreground/80">
+                <Badge
+                  variant="outline"
+                  className="border-foreground/20 text-foreground/80">
                   {movie.genre}
                 </Badge>
               </div>
@@ -89,7 +95,9 @@ export function MovieDetailModal({ movie, open, onOpenChange }: MovieDetailModal
             </div>
 
             {/* Description */}
-            <p className="text-sm leading-relaxed text-foreground/80">{movie.description}</p>
+            <p className="text-sm leading-relaxed text-foreground/80">
+              {movie.description}
+            </p>
 
             {/* Cast */}
             <div>
@@ -98,7 +106,10 @@ export function MovieDetailModal({ movie, open, onOpenChange }: MovieDetailModal
               </h4>
               <div className="flex flex-wrap gap-2">
                 {movie.cast.map((actor) => (
-                  <Badge key={actor} variant="secondary" className="bg-secondary text-secondary-foreground font-normal">
+                  <Badge
+                    key={actor}
+                    variant="secondary"
+                    className="bg-secondary text-secondary-foreground font-normal">
                     {actor}
                   </Badge>
                 ))}
@@ -124,16 +135,20 @@ export function MovieDetailModal({ movie, open, onOpenChange }: MovieDetailModal
                         <button
                           key={`${st.time}-${st.theater}-${i}`}
                           type="button"
-                          className="flex items-center justify-between rounded-lg border border-border bg-background p-3 transition-colors hover:border-primary hover:bg-primary/5"
-                        >
+                          className="flex items-center justify-between rounded-lg border border-border bg-background p-3 transition-colors hover:border-primary hover:bg-primary/5">
                           <div className="flex flex-col text-left">
-                            <span className="text-sm font-semibold text-foreground">{st.time}</span>
+                            <span className="text-sm font-semibold text-foreground">
+                              {st.time}
+                            </span>
                             <span className="flex items-center gap-1 text-xs text-muted-foreground">
                               <MapPin className="h-3 w-3" />
                               {st.theater}
                             </span>
                           </div>
-                          <Button size="sm" variant="ghost" className="text-xs text-primary hover:bg-primary/10 hover:text-primary">
+                          <Button
+                            size="sm"
+                            variant="ghost"
+                            className="text-xs text-primary hover:bg-primary/10 hover:text-primary">
                             Book
                           </Button>
                         </button>
@@ -147,5 +162,5 @@ export function MovieDetailModal({ movie, open, onOpenChange }: MovieDetailModal
         </ScrollArea>
       </DialogContent>
     </Dialog>
-  )
+  );
 }
