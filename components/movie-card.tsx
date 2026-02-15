@@ -17,16 +17,11 @@ export function MovieCard({ movie, onClick, className, variant = "carousel" }: M
       type="button"
       onClick={() => onClick(movie)}
       className={cn(
-        "group flex flex-col text-left outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-lg",
+        "group flex h-full w-full flex-col text-left outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-lg",
         className
       )}
     >
-      <div
-        className={cn(
-          "relative overflow-hidden rounded-lg",
-          variant === "carousel" ? "aspect-[2/3]" : "aspect-[2/3]"
-        )}
-      >
+      <div className="relative w-full overflow-hidden rounded-lg aspect-[2/3]">
         <Image
           src={movie.thumbnail || "/placeholder.svg"}
           alt={movie.title}
@@ -43,12 +38,12 @@ export function MovieCard({ movie, onClick, className, variant = "carousel" }: M
           </div>
         </div>
       </div>
-      <div className="flex flex-col gap-0.5 pt-3">
+      <div className="flex flex-col gap-0.5 pt-3 min-h-[3rem]">
         <h3 className="text-sm font-semibold text-foreground line-clamp-1 group-hover:text-primary transition-colors">
           {movie.title}
         </h3>
         {variant === "grid" && (
-          <p className="text-xs text-muted-foreground">{movie.genre}</p>
+          <p className="text-xs text-muted-foreground line-clamp-1">{movie.genre}</p>
         )}
       </div>
     </button>
