@@ -1,50 +1,57 @@
-"use client"
+"use client";
 
-import { ChevronLeft, ChevronRight } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
   type CarouselApi,
-} from "@/components/ui/carousel"
-import { MovieCard } from "@/components/movie-card"
-import type { Movie } from "@/lib/mock-data"
-import { useState, useCallback, useEffect } from "react"
+} from "@/components/ui/carousel";
+import { MovieCard } from "@/components/movie-card";
+import type { Movie } from "@/lib/mock-data";
+import { useState, useCallback, useEffect } from "react";
 
 interface MovieCarouselProps {
-  title: string
-  movies: Movie[]
-  onMovieClick: (movie: Movie) => void
-  id?: string
+  title: string;
+  movies: Movie[];
+  onMovieClick: (movie: Movie) => void;
+  id?: string;
 }
 
-export function MovieCarousel({ title, movies, onMovieClick, id }: MovieCarouselProps) {
-  const [api, setApi] = useState<CarouselApi>()
-  const [canScrollPrev, setCanScrollPrev] = useState(false)
-  const [canScrollNext, setCanScrollNext] = useState(false)
+export function MovieCarousel({
+  title,
+  movies,
+  onMovieClick,
+  id,
+}: MovieCarouselProps) {
+  const [api, setApi] = useState<CarouselApi>();
+  const [canScrollPrev, setCanScrollPrev] = useState(false);
+  const [canScrollNext, setCanScrollNext] = useState(false);
 
   const onSelect = useCallback(() => {
-    if (!api) return
-    setCanScrollPrev(api.canScrollPrev())
-    setCanScrollNext(api.canScrollNext())
-  }, [api])
+    if (!api) return;
+    setCanScrollPrev(api.canScrollPrev());
+    setCanScrollNext(api.canScrollNext());
+  }, [api]);
 
   useEffect(() => {
-    if (!api) return
-    onSelect()
-    api.on("select", onSelect)
-    api.on("reInit", onSelect)
+    if (!api) return;
+    onSelect();
+    api.on("select", onSelect);
+    api.on("reInit", onSelect);
     return () => {
-      api.off("select", onSelect)
-    }
-  }, [api, onSelect])
+      api.off("select", onSelect);
+    };
+  }, [api, onSelect]);
 
   return (
     <section id={id} className="py-8 lg:py-12">
       <div className="mx-auto max-w-7xl px-4 lg:px-8">
         <div className="flex items-center justify-between pb-6">
-          <h2 className="font-serif text-2xl font-bold text-foreground lg:text-3xl">{title}</h2>
+          <h2 className="font-serif text-2xl font-bold text-foreground lg:text-3xl">
+            {title}
+          </h2>
           <div className="flex items-center gap-2">
             <Button
               variant="outline"
@@ -52,8 +59,7 @@ export function MovieCarousel({ title, movies, onMovieClick, id }: MovieCarousel
               className="h-9 w-9 rounded-full border-border/60 text-foreground hover:bg-secondary bg-transparent"
               onClick={() => api?.scrollPrev()}
               disabled={!canScrollPrev}
-              aria-label="Previous movies"
-            >
+              aria-label="Previous movies">
               <ChevronLeft className="h-4 w-4" />
             </Button>
             <Button
@@ -62,8 +68,7 @@ export function MovieCarousel({ title, movies, onMovieClick, id }: MovieCarousel
               className="h-9 w-9 rounded-full border-border/60 text-foreground hover:bg-secondary bg-transparent"
               onClick={() => api?.scrollNext()}
               disabled={!canScrollNext}
-              aria-label="Next movies"
-            >
+              aria-label="Next movies">
               <ChevronRight className="h-4 w-4" />
             </Button>
           </div>
@@ -75,20 +80,22 @@ export function MovieCarousel({ title, movies, onMovieClick, id }: MovieCarousel
             align: "start",
             dragFree: true,
           }}
-          className="w-full"
-        >
+          className="w-full">
           <CarouselContent className="-ml-3 lg:-ml-4">
-            {movies.map((movie) => (
+            {movies.map((movie, index) => (
               <CarouselItem
-                key={movie.id}
-                className="basis-[40%] pl-3 sm:basis-[30%] md:basis-[22%] lg:basis-[18%] lg:pl-4"
-              >
-                <MovieCard movie={movie} onClick={onMovieClick} variant="carousel" />
+                key={`${movie.id}-${index}`}
+                className="basis-[40%] pl-3 sm:basis-[30%] md:basis-[22%] lg:basis-[18%] lg:pl-4">
+                <MovieCard
+                  movie={movie}
+                  onClick={onMovieClick}
+                  variant="carousel"
+                />
               </CarouselItem>
             ))}
           </CarouselContent>
         </Carousel>
       </div>
     </section>
-  )
+  );
 }

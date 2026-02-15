@@ -52,8 +52,6 @@ export default function Home() {
       : todayProgramData?.data;
     if (!programs || !Array.isArray(programs)) return [];
     const transformed = transformProgramsToMovies(programs);
-    console.log("Today movies transformed:", transformed);
-    console.log("Today movies count:", transformed.length);
     return transformed;
   }, [todayProgramData]);
 

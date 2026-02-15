@@ -9,7 +9,7 @@ import { getImageUrl } from '../utils';
 
 // Component's Movie interface (from mock-data)
 export interface Movie {
-  id: number;
+  id: string;
   title: string;
   description: string;
   genre: string;
@@ -41,7 +41,7 @@ export function transformProgramToMovie(program: ProgramResponse): Movie {
   }));
 
   return {
-    id: parseInt(movie.id) || 0,
+    id: movie.id,
     title: movie.title,
     description: movie.description,
     genre: movie.genre,

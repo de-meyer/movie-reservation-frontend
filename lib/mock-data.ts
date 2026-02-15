@@ -1,5 +1,5 @@
 export interface Movie {
-  id: number
+  id: string
   title: string
   description: string
   genre: string
@@ -36,7 +36,7 @@ const tomorrowDate = new Date(Date.now() + 86400000).toLocaleDateString("en-US",
 
 export const featuredMovies: Movie[] = [
   {
-    id: 1,
+    id: "1",
     title: "Dune: Prophecy",
     description:
       "Set 10,000 years before the events of Dune, this epic saga follows the Harkonnen Sisters as they establish the secretive order known as the Bene Gesserit to combat an existential threat to humankind.",
@@ -55,7 +55,7 @@ export const featuredMovies: Movie[] = [
     ],
   },
   {
-    id: 2,
+    id: "2",
     title: "The Last Ember",
     description:
       "A gripping thriller where a firefighter discovers a conspiracy hidden beneath the ashes of a devastating wildfire that threatens to expose the corrupt elite of a small mountain town.",
@@ -74,7 +74,7 @@ export const featuredMovies: Movie[] = [
     ],
   },
   {
-    id: 3,
+    id: "3",
     title: "Midnight Garden",
     description:
       "An enchanting fantasy adventure where a young botanist discovers a hidden garden that blooms only at midnight, unlocking a portal to a parallel world filled with magical creatures.",
@@ -93,7 +93,7 @@ export const featuredMovies: Movie[] = [
     ],
   },
   {
-    id: 4,
+    id: "4",
     title: "Echoes of Steel",
     description:
       "In a dystopian future, a rogue engineer builds an underground resistance against a totalitarian regime using repurposed machines, sparking a revolution that could change the world forever.",
@@ -116,7 +116,7 @@ export const featuredMovies: Movie[] = [
 export const todayMovies: Movie[] = [
   ...featuredMovies,
   {
-    id: 5,
+    id: "5",
     title: "The Silent Witness",
     description:
       "A courtroom drama that follows a deaf lawyer who must prove the innocence of a wrongly accused man using only visual evidence in a case that captivates the entire nation.",
@@ -132,7 +132,7 @@ export const todayMovies: Movie[] = [
     ],
   },
   {
-    id: 6,
+    id: "6",
     title: "Aurora Rising",
     description:
       "A visually stunning space opera where a crew of misfit astronauts discovers an alien signal originating from a nebula, leading them on a perilous journey to the edge of the known universe.",
@@ -148,7 +148,7 @@ export const todayMovies: Movie[] = [
     ],
   },
   {
-    id: 7,
+    id: "7",
     title: "Crimson Tide",
     description:
       "A heart-pounding submarine thriller where the crew must navigate deadly waters and internal conflict when their captain receives conflicting orders during an international crisis.",
@@ -164,7 +164,7 @@ export const todayMovies: Movie[] = [
     ],
   },
   {
-    id: 8,
+    id: "8",
     title: "Whispers in the Wind",
     description:
       "A poetic romance set in 1920s Ireland, following two star-crossed lovers whose forbidden relationship defies the social and political turmoil of their time.",
@@ -187,7 +187,7 @@ export const tomorrowMovies: Movie[] = [
   featuredMovies[2],
   featuredMovies[3],
   {
-    id: 9,
+    id: "9",
     title: "The Architects",
     description:
       "A mind-bending heist film where a team of architects design an impossible building as a cover for the greatest art theft in history, blending reality and illusion.",
@@ -203,7 +203,7 @@ export const tomorrowMovies: Movie[] = [
     ],
   },
   {
-    id: 10,
+    id: "10",
     title: "Neon Requiem",
     description:
       "A cyberpunk noir detective story set in a rain-soaked megacity where a jaded investigator uncovers a conspiracy that blurs the lines between human consciousness and AI.",
@@ -219,7 +219,7 @@ export const tomorrowMovies: Movie[] = [
     ],
   },
   {
-    id: 11,
+    id: "11",
     title: "Golden Hour",
     description:
       "A sweeping period drama about a pioneering photographer in 1890s California whose work capturing the last wild landscapes ignites a conservation movement.",
