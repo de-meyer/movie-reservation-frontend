@@ -7,14 +7,13 @@ import { MovieCarousel } from "@/components/movie-carousel";
 import { MovieGrid } from "@/components/movie-grid";
 import { MovieDetailModal } from "@/components/movie-detail-modal";
 import { Footer } from "@/components/footer";
-import { type Movie, type User } from "@/lib/mock-data";
+import { type Movie } from "@/lib/mock-data";
 import { useGetCurrentProgram } from "@/lib/api/endpoints/program/program";
 import { useGetTodayProgram } from "@/lib/api/endpoints/program/program";
 import { useGetTomorrowProgram } from "@/lib/api/endpoints/program/program";
 import { transformProgramsToMovies } from "@/lib/api/transform";
 
 export default function Home() {
-  const [user, setUser] = useState<User | null>(null);
   const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -77,20 +76,12 @@ export default function Home() {
     setModalOpen(true);
   };
 
-  const handleLogin = (loggedInUser: User) => {
-    setUser(loggedInUser);
-  };
-
-  const handleLogout = () => {
-    setUser(null);
-  };
-
   const isLoading = isLoadingCurrent || isLoadingToday || isLoadingTomorrow;
   const hasError = errorCurrent || errorToday || errorTomorrow;
 
   return (
     <div className="flex min-h-screen flex-col bg-background">
-      <Navbar user={user} onLogin={handleLogin} onLogout={handleLogout} />
+      <Navbar />
 
       <main className="flex-1">
         {/* Hero Banner - Auto-sliding carousel */}
