@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { Navbar } from "@/components/navbar";
 import { HeroBanner } from "@/components/hero-banner";
 import { MovieCarousel } from "@/components/movie-carousel";
@@ -12,11 +12,40 @@ import { useGetCurrentProgram } from "@/lib/api/endpoints/program/program";
 import { useGetTodayProgram } from "@/lib/api/endpoints/program/program";
 import { useGetTomorrowProgram } from "@/lib/api/endpoints/program/program";
 import { transformProgramsToMovies } from "@/lib/api/transform";
+import { useMe } from "@/lib/api/endpoints/user/user";
 
 export default function Home() {
   const [user, setUser] = useState<User | null>(null);
   const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
+
+  // Fetch current authenticated user (populated after Discord OAuth redirect)
+  const {
+    data: meData,
+    isSuccess: isMeSuccess,
+    isError: isMeError,
+  } = useMe({
+    query: { retry: false },
+  });
+
+  useEffect(() => {
+    if (isMeSuccess && meData) {
+      const rawUser = meData.data as any;
+      const name: string =
+        rawUser?.name || rawUser?.username || rawUser?.login || "User";
+      const id: string | undefined = rawUser?.id;
+      const avatarHash: string | undefined = rawUser?.avatar;
+      const avatar: string =
+        id && avatarHash
+          ? `https://cdn.discordapp.com/avatars/${id}/${avatarHash}.png`
+          : rawUser?.avatar_url ||
+            rawUser?.picture ||
+            `https://api.dicebear.com/9.x/initials/svg?seed=${encodeURIComponent(name)}`;
+      setUser({ name, avatar });
+    } else if (isMeError) {
+      setUser(null);
+    }
+  }, [isMeSuccess, isMeError, meData]);
 
   // Fetch data from API
   const {
