@@ -7,7 +7,6 @@
  */
 
 export * from './health200';
-export * from './me200';
 export * from './movie';
 export * from './movieBrowseResponse';
 export * from './movieCreateShowResponse';
@@ -21,4 +20,5 @@ export * from './showIdRequest';
 export * from './showResponse';
 export * from './showSchedule';
 export * from './theaterResponse';
+export * from './userLoginResponse';
 export * from './userResponse';

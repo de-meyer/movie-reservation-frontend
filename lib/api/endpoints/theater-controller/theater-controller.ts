@@ -27,6 +27,8 @@ import type {
 import { customInstance } from '../../mutator';
 
 
+type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
+
 
 
 export type listTheatersResponse200 = {
@@ -71,16 +73,16 @@ export const getListTheatersQueryKey = () => {
     }
 
     
-export const getListTheatersQueryOptions = <TData = Awaited<ReturnType<typeof listTheaters>>, TError = unknown>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listTheaters>>, TError, TData>>, }
+export const getListTheatersQueryOptions = <TData = Awaited<ReturnType<typeof listTheaters>>, TError = unknown>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listTheaters>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
 ) => {
 
-const {query: queryOptions} = options ?? {};
+const {query: queryOptions, request: requestOptions} = options ?? {};
 
   const queryKey =  queryOptions?.queryKey ?? getListTheatersQueryKey();
 
   
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof listTheaters>>> = ({ signal }) => listTheaters({ signal });
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof listTheaters>>> = ({ signal }) => listTheaters({ signal, ...requestOptions });
 
       
 
@@ -100,7 +102,7 @@ export function useListTheaters<TData = Awaited<ReturnType<typeof listTheaters>>
           TError,
           Awaited<ReturnType<typeof listTheaters>>
         > , 'initialData'
-      >, }
+      >, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient
   ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 export function useListTheaters<TData = Awaited<ReturnType<typeof listTheaters>>, TError = unknown>(
@@ -110,16 +112,16 @@ export function useListTheaters<TData = Awaited<ReturnType<typeof listTheaters>>
           TError,
           Awaited<ReturnType<typeof listTheaters>>
         > , 'initialData'
-      >, }
+      >, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 export function useListTheaters<TData = Awaited<ReturnType<typeof listTheaters>>, TError = unknown>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listTheaters>>, TError, TData>>, }
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listTheaters>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 
 export function useListTheaters<TData = Awaited<ReturnType<typeof listTheaters>>, TError = unknown>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listTheaters>>, TError, TData>>, }
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listTheaters>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient 
  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
 

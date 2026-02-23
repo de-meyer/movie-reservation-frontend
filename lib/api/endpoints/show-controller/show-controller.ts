@@ -33,6 +33,8 @@ import type {
 import { customInstance } from '../../mutator';
 
 
+type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
+
 
 
 export type findShowByIdResponse200 = {
@@ -71,15 +73,15 @@ export const findShowById = async (showIdRequest: ShowIdRequest, options?: Reque
 
 
 export const getFindShowByIdMutationOptions = <TError = unknown,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof findShowById>>, TError,{data: ShowIdRequest}, TContext>, }
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof findShowById>>, TError,{data: ShowIdRequest}, TContext>, request?: SecondParameter<typeof customInstance>}
 ): UseMutationOptions<Awaited<ReturnType<typeof findShowById>>, TError,{data: ShowIdRequest}, TContext> => {
 
 const mutationKey = ['findShowById'];
-const {mutation: mutationOptions} = options ?
+const {mutation: mutationOptions, request: requestOptions} = options ?
       options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
       options
       : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }};
+      : {mutation: { mutationKey, }, request: undefined};
 
       
 
@@ -87,7 +89,7 @@ const {mutation: mutationOptions} = options ?
       const mutationFn: MutationFunction<Awaited<ReturnType<typeof findShowById>>, {data: ShowIdRequest}> = (props) => {
           const {data} = props ?? {};
 
-          return  findShowById(data,)
+          return  findShowById(data,requestOptions)
         }
 
 
@@ -102,7 +104,7 @@ const {mutation: mutationOptions} = options ?
     export type FindShowByIdMutationError = unknown
 
     export const useFindShowById = <TError = unknown,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof findShowById>>, TError,{data: ShowIdRequest}, TContext>, }
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof findShowById>>, TError,{data: ShowIdRequest}, TContext>, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient): UseMutationResult<
         Awaited<ReturnType<typeof findShowById>>,
         TError,
@@ -147,15 +149,15 @@ export const createShow = async (showCreateRequest: ShowCreateRequest, options?:
 
 
 export const getCreateShowMutationOptions = <TError = unknown,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createShow>>, TError,{data: ShowCreateRequest}, TContext>, }
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createShow>>, TError,{data: ShowCreateRequest}, TContext>, request?: SecondParameter<typeof customInstance>}
 ): UseMutationOptions<Awaited<ReturnType<typeof createShow>>, TError,{data: ShowCreateRequest}, TContext> => {
 
 const mutationKey = ['createShow'];
-const {mutation: mutationOptions} = options ?
+const {mutation: mutationOptions, request: requestOptions} = options ?
       options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
       options
       : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }};
+      : {mutation: { mutationKey, }, request: undefined};
 
       
 
@@ -163,7 +165,7 @@ const {mutation: mutationOptions} = options ?
       const mutationFn: MutationFunction<Awaited<ReturnType<typeof createShow>>, {data: ShowCreateRequest}> = (props) => {
           const {data} = props ?? {};
 
-          return  createShow(data,)
+          return  createShow(data,requestOptions)
         }
 
 
@@ -178,7 +180,7 @@ const {mutation: mutationOptions} = options ?
     export type CreateShowMutationError = unknown
 
     export const useCreateShow = <TError = unknown,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createShow>>, TError,{data: ShowCreateRequest}, TContext>, }
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createShow>>, TError,{data: ShowCreateRequest}, TContext>, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient): UseMutationResult<
         Awaited<ReturnType<typeof createShow>>,
         TError,
@@ -229,16 +231,16 @@ export const getFindAllShowsQueryKey = () => {
     }
 
     
-export const getFindAllShowsQueryOptions = <TData = Awaited<ReturnType<typeof findAllShows>>, TError = unknown>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof findAllShows>>, TError, TData>>, }
+export const getFindAllShowsQueryOptions = <TData = Awaited<ReturnType<typeof findAllShows>>, TError = unknown>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof findAllShows>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
 ) => {
 
-const {query: queryOptions} = options ?? {};
+const {query: queryOptions, request: requestOptions} = options ?? {};
 
   const queryKey =  queryOptions?.queryKey ?? getFindAllShowsQueryKey();
 
   
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof findAllShows>>> = ({ signal }) => findAllShows({ signal });
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof findAllShows>>> = ({ signal }) => findAllShows({ signal, ...requestOptions });
 
       
 
@@ -258,7 +260,7 @@ export function useFindAllShows<TData = Awaited<ReturnType<typeof findAllShows>>
           TError,
           Awaited<ReturnType<typeof findAllShows>>
         > , 'initialData'
-      >, }
+      >, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient
   ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 export function useFindAllShows<TData = Awaited<ReturnType<typeof findAllShows>>, TError = unknown>(
@@ -268,16 +270,16 @@ export function useFindAllShows<TData = Awaited<ReturnType<typeof findAllShows>>
           TError,
           Awaited<ReturnType<typeof findAllShows>>
         > , 'initialData'
-      >, }
+      >, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 export function useFindAllShows<TData = Awaited<ReturnType<typeof findAllShows>>, TError = unknown>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof findAllShows>>, TError, TData>>, }
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof findAllShows>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 
 export function useFindAllShows<TData = Awaited<ReturnType<typeof findAllShows>>, TError = unknown>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof findAllShows>>, TError, TData>>, }
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof findAllShows>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient 
  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
 

@@ -6,4 +6,11 @@
  * OpenAPI spec version: 1.0.0
  */
 
-export type Me200 = {[key: string]: { [key: string]: unknown }};
+export interface UserLoginResponse {
+  id?: string;
+  providerId: string;
+  name: string;
+  email: string;
+  avatar: string;
+  role: string;
+}

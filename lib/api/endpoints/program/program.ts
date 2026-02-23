@@ -27,6 +27,8 @@ import type {
 import { customInstance } from '../../mutator';
 
 
+type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
+
 
 
 /**
@@ -75,16 +77,16 @@ export const getGetTomorrowProgramQueryKey = () => {
     }
 
     
-export const getGetTomorrowProgramQueryOptions = <TData = Awaited<ReturnType<typeof getTomorrowProgram>>, TError = unknown>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getTomorrowProgram>>, TError, TData>>, }
+export const getGetTomorrowProgramQueryOptions = <TData = Awaited<ReturnType<typeof getTomorrowProgram>>, TError = unknown>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getTomorrowProgram>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
 ) => {
 
-const {query: queryOptions} = options ?? {};
+const {query: queryOptions, request: requestOptions} = options ?? {};
 
   const queryKey =  queryOptions?.queryKey ?? getGetTomorrowProgramQueryKey();
 
   
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getTomorrowProgram>>> = ({ signal }) => getTomorrowProgram({ signal });
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getTomorrowProgram>>> = ({ signal }) => getTomorrowProgram({ signal, ...requestOptions });
 
       
 
@@ -104,7 +106,7 @@ export function useGetTomorrowProgram<TData = Awaited<ReturnType<typeof getTomor
           TError,
           Awaited<ReturnType<typeof getTomorrowProgram>>
         > , 'initialData'
-      >, }
+      >, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient
   ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 export function useGetTomorrowProgram<TData = Awaited<ReturnType<typeof getTomorrowProgram>>, TError = unknown>(
@@ -114,11 +116,11 @@ export function useGetTomorrowProgram<TData = Awaited<ReturnType<typeof getTomor
           TError,
           Awaited<ReturnType<typeof getTomorrowProgram>>
         > , 'initialData'
-      >, }
+      >, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 export function useGetTomorrowProgram<TData = Awaited<ReturnType<typeof getTomorrowProgram>>, TError = unknown>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getTomorrowProgram>>, TError, TData>>, }
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getTomorrowProgram>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 /**
@@ -126,7 +128,7 @@ export function useGetTomorrowProgram<TData = Awaited<ReturnType<typeof getTomor
  */
 
 export function useGetTomorrowProgram<TData = Awaited<ReturnType<typeof getTomorrowProgram>>, TError = unknown>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getTomorrowProgram>>, TError, TData>>, }
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getTomorrowProgram>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient 
  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
 
@@ -186,16 +188,16 @@ export const getGetTodayProgramQueryKey = () => {
     }
 
     
-export const getGetTodayProgramQueryOptions = <TData = Awaited<ReturnType<typeof getTodayProgram>>, TError = unknown>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getTodayProgram>>, TError, TData>>, }
+export const getGetTodayProgramQueryOptions = <TData = Awaited<ReturnType<typeof getTodayProgram>>, TError = unknown>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getTodayProgram>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
 ) => {
 
-const {query: queryOptions} = options ?? {};
+const {query: queryOptions, request: requestOptions} = options ?? {};
 
   const queryKey =  queryOptions?.queryKey ?? getGetTodayProgramQueryKey();
 
   
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getTodayProgram>>> = ({ signal }) => getTodayProgram({ signal });
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getTodayProgram>>> = ({ signal }) => getTodayProgram({ signal, ...requestOptions });
 
       
 
@@ -215,7 +217,7 @@ export function useGetTodayProgram<TData = Awaited<ReturnType<typeof getTodayPro
           TError,
           Awaited<ReturnType<typeof getTodayProgram>>
         > , 'initialData'
-      >, }
+      >, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient
   ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 export function useGetTodayProgram<TData = Awaited<ReturnType<typeof getTodayProgram>>, TError = unknown>(
@@ -225,11 +227,11 @@ export function useGetTodayProgram<TData = Awaited<ReturnType<typeof getTodayPro
           TError,
           Awaited<ReturnType<typeof getTodayProgram>>
         > , 'initialData'
-      >, }
+      >, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 export function useGetTodayProgram<TData = Awaited<ReturnType<typeof getTodayProgram>>, TError = unknown>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getTodayProgram>>, TError, TData>>, }
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getTodayProgram>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 /**
@@ -237,7 +239,7 @@ export function useGetTodayProgram<TData = Awaited<ReturnType<typeof getTodayPro
  */
 
 export function useGetTodayProgram<TData = Awaited<ReturnType<typeof getTodayProgram>>, TError = unknown>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getTodayProgram>>, TError, TData>>, }
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getTodayProgram>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient 
  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
 
@@ -297,16 +299,16 @@ export const getGetCurrentProgramQueryKey = () => {
     }
 
     
-export const getGetCurrentProgramQueryOptions = <TData = Awaited<ReturnType<typeof getCurrentProgram>>, TError = unknown>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getCurrentProgram>>, TError, TData>>, }
+export const getGetCurrentProgramQueryOptions = <TData = Awaited<ReturnType<typeof getCurrentProgram>>, TError = unknown>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getCurrentProgram>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
 ) => {
 
-const {query: queryOptions} = options ?? {};
+const {query: queryOptions, request: requestOptions} = options ?? {};
 
   const queryKey =  queryOptions?.queryKey ?? getGetCurrentProgramQueryKey();
 
   
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getCurrentProgram>>> = ({ signal }) => getCurrentProgram({ signal });
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getCurrentProgram>>> = ({ signal }) => getCurrentProgram({ signal, ...requestOptions });
 
       
 
@@ -326,7 +328,7 @@ export function useGetCurrentProgram<TData = Awaited<ReturnType<typeof getCurren
           TError,
           Awaited<ReturnType<typeof getCurrentProgram>>
         > , 'initialData'
-      >, }
+      >, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient
   ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 export function useGetCurrentProgram<TData = Awaited<ReturnType<typeof getCurrentProgram>>, TError = unknown>(
@@ -336,11 +338,11 @@ export function useGetCurrentProgram<TData = Awaited<ReturnType<typeof getCurren
           TError,
           Awaited<ReturnType<typeof getCurrentProgram>>
         > , 'initialData'
-      >, }
+      >, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 export function useGetCurrentProgram<TData = Awaited<ReturnType<typeof getCurrentProgram>>, TError = unknown>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getCurrentProgram>>, TError, TData>>, }
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getCurrentProgram>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 /**
@@ -348,7 +350,7 @@ export function useGetCurrentProgram<TData = Awaited<ReturnType<typeof getCurren
  */
 
 export function useGetCurrentProgram<TData = Awaited<ReturnType<typeof getCurrentProgram>>, TError = unknown>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getCurrentProgram>>, TError, TData>>, }
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getCurrentProgram>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient 
  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
 

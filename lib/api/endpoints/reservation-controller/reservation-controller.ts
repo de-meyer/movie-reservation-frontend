@@ -32,6 +32,8 @@ import type {
 import { customInstance } from '../../mutator';
 
 
+type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
+
 
 
 export type getReservationsResponse200 = {
@@ -76,16 +78,16 @@ export const getGetReservationsQueryKey = () => {
     }
 
     
-export const getGetReservationsQueryOptions = <TData = Awaited<ReturnType<typeof getReservations>>, TError = unknown>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getReservations>>, TError, TData>>, }
+export const getGetReservationsQueryOptions = <TData = Awaited<ReturnType<typeof getReservations>>, TError = unknown>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getReservations>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
 ) => {
 
-const {query: queryOptions} = options ?? {};
+const {query: queryOptions, request: requestOptions} = options ?? {};
 
   const queryKey =  queryOptions?.queryKey ?? getGetReservationsQueryKey();
 
   
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getReservations>>> = ({ signal }) => getReservations({ signal });
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getReservations>>> = ({ signal }) => getReservations({ signal, ...requestOptions });
 
       
 
@@ -105,7 +107,7 @@ export function useGetReservations<TData = Awaited<ReturnType<typeof getReservat
           TError,
           Awaited<ReturnType<typeof getReservations>>
         > , 'initialData'
-      >, }
+      >, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient
   ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 export function useGetReservations<TData = Awaited<ReturnType<typeof getReservations>>, TError = unknown>(
@@ -115,16 +117,16 @@ export function useGetReservations<TData = Awaited<ReturnType<typeof getReservat
           TError,
           Awaited<ReturnType<typeof getReservations>>
         > , 'initialData'
-      >, }
+      >, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 export function useGetReservations<TData = Awaited<ReturnType<typeof getReservations>>, TError = unknown>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getReservations>>, TError, TData>>, }
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getReservations>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 
 export function useGetReservations<TData = Awaited<ReturnType<typeof getReservations>>, TError = unknown>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getReservations>>, TError, TData>>, }
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getReservations>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient 
  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
 
@@ -174,15 +176,15 @@ export const createReservation = async (reservationRequest: ReservationRequest, 
 
 
 export const getCreateReservationMutationOptions = <TError = unknown,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createReservation>>, TError,{data: ReservationRequest}, TContext>, }
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createReservation>>, TError,{data: ReservationRequest}, TContext>, request?: SecondParameter<typeof customInstance>}
 ): UseMutationOptions<Awaited<ReturnType<typeof createReservation>>, TError,{data: ReservationRequest}, TContext> => {
 
 const mutationKey = ['createReservation'];
-const {mutation: mutationOptions} = options ?
+const {mutation: mutationOptions, request: requestOptions} = options ?
       options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
       options
       : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }};
+      : {mutation: { mutationKey, }, request: undefined};
 
       
 
@@ -190,7 +192,7 @@ const {mutation: mutationOptions} = options ?
       const mutationFn: MutationFunction<Awaited<ReturnType<typeof createReservation>>, {data: ReservationRequest}> = (props) => {
           const {data} = props ?? {};
 
-          return  createReservation(data,)
+          return  createReservation(data,requestOptions)
         }
 
 
@@ -205,7 +207,7 @@ const {mutation: mutationOptions} = options ?
     export type CreateReservationMutationError = unknown
 
     export const useCreateReservation = <TError = unknown,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createReservation>>, TError,{data: ReservationRequest}, TContext>, }
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createReservation>>, TError,{data: ReservationRequest}, TContext>, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient): UseMutationResult<
         Awaited<ReturnType<typeof createReservation>>,
         TError,

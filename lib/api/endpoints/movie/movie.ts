@@ -34,6 +34,8 @@ import type {
 import { customInstance } from '../../mutator';
 
 
+type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
+
 
 
 /**
@@ -83,15 +85,15 @@ export const createMovie = async (movieCreationRequest: MovieCreationRequest, op
 
 
 export const getCreateMovieMutationOptions = <TError = MovieCreationResponse,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createMovie>>, TError,{data: MovieCreationRequest}, TContext>, }
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createMovie>>, TError,{data: MovieCreationRequest}, TContext>, request?: SecondParameter<typeof customInstance>}
 ): UseMutationOptions<Awaited<ReturnType<typeof createMovie>>, TError,{data: MovieCreationRequest}, TContext> => {
 
 const mutationKey = ['createMovie'];
-const {mutation: mutationOptions} = options ?
+const {mutation: mutationOptions, request: requestOptions} = options ?
       options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
       options
       : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }};
+      : {mutation: { mutationKey, }, request: undefined};
 
       
 
@@ -99,7 +101,7 @@ const {mutation: mutationOptions} = options ?
       const mutationFn: MutationFunction<Awaited<ReturnType<typeof createMovie>>, {data: MovieCreationRequest}> = (props) => {
           const {data} = props ?? {};
 
-          return  createMovie(data,)
+          return  createMovie(data,requestOptions)
         }
 
 
@@ -117,7 +119,7 @@ const {mutation: mutationOptions} = options ?
  * @summary Create a movie show
  */
 export const useCreateMovie = <TError = MovieCreationResponse,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createMovie>>, TError,{data: MovieCreationRequest}, TContext>, }
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createMovie>>, TError,{data: MovieCreationRequest}, TContext>, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient): UseMutationResult<
         Awaited<ReturnType<typeof createMovie>>,
         TError,
@@ -179,16 +181,16 @@ export const getGetMovieByIdQueryKey = (id: string,) => {
     }
 
     
-export const getGetMovieByIdQueryOptions = <TData = Awaited<ReturnType<typeof getMovieById>>, TError = MovieCreateShowResponse>(id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMovieById>>, TError, TData>>, }
+export const getGetMovieByIdQueryOptions = <TData = Awaited<ReturnType<typeof getMovieById>>, TError = MovieCreateShowResponse>(id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMovieById>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
 ) => {
 
-const {query: queryOptions} = options ?? {};
+const {query: queryOptions, request: requestOptions} = options ?? {};
 
   const queryKey =  queryOptions?.queryKey ?? getGetMovieByIdQueryKey(id);
 
   
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getMovieById>>> = ({ signal }) => getMovieById(id, { signal });
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getMovieById>>> = ({ signal }) => getMovieById(id, { signal, ...requestOptions });
 
       
 
@@ -208,7 +210,7 @@ export function useGetMovieById<TData = Awaited<ReturnType<typeof getMovieById>>
           TError,
           Awaited<ReturnType<typeof getMovieById>>
         > , 'initialData'
-      >, }
+      >, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient
   ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 export function useGetMovieById<TData = Awaited<ReturnType<typeof getMovieById>>, TError = MovieCreateShowResponse>(
@@ -218,11 +220,11 @@ export function useGetMovieById<TData = Awaited<ReturnType<typeof getMovieById>>
           TError,
           Awaited<ReturnType<typeof getMovieById>>
         > , 'initialData'
-      >, }
+      >, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 export function useGetMovieById<TData = Awaited<ReturnType<typeof getMovieById>>, TError = MovieCreateShowResponse>(
- id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMovieById>>, TError, TData>>, }
+ id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMovieById>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 /**
@@ -230,7 +232,7 @@ export function useGetMovieById<TData = Awaited<ReturnType<typeof getMovieById>>
  */
 
 export function useGetMovieById<TData = Awaited<ReturnType<typeof getMovieById>>, TError = MovieCreateShowResponse>(
- id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMovieById>>, TError, TData>>, }
+ id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMovieById>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient 
  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
 
@@ -290,15 +292,15 @@ export const deleteMovie = async (id: string, options?: RequestInit): Promise<de
 
 
 export const getDeleteMovieMutationOptions = <TError = void,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteMovie>>, TError,{id: string}, TContext>, }
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteMovie>>, TError,{id: string}, TContext>, request?: SecondParameter<typeof customInstance>}
 ): UseMutationOptions<Awaited<ReturnType<typeof deleteMovie>>, TError,{id: string}, TContext> => {
 
 const mutationKey = ['deleteMovie'];
-const {mutation: mutationOptions} = options ?
+const {mutation: mutationOptions, request: requestOptions} = options ?
       options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
       options
       : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }};
+      : {mutation: { mutationKey, }, request: undefined};
 
       
 
@@ -306,7 +308,7 @@ const {mutation: mutationOptions} = options ?
       const mutationFn: MutationFunction<Awaited<ReturnType<typeof deleteMovie>>, {id: string}> = (props) => {
           const {id} = props ?? {};
 
-          return  deleteMovie(id,)
+          return  deleteMovie(id,requestOptions)
         }
 
 
@@ -324,7 +326,7 @@ const {mutation: mutationOptions} = options ?
  * @summary Delete movie
  */
 export const useDeleteMovie = <TError = void,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteMovie>>, TError,{id: string}, TContext>, }
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteMovie>>, TError,{id: string}, TContext>, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient): UseMutationResult<
         Awaited<ReturnType<typeof deleteMovie>>,
         TError,
@@ -379,16 +381,16 @@ export const getGetAllMovieInformationsForShowCreationQueryKey = () => {
     }
 
     
-export const getGetAllMovieInformationsForShowCreationQueryOptions = <TData = Awaited<ReturnType<typeof getAllMovieInformationsForShowCreation>>, TError = unknown>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAllMovieInformationsForShowCreation>>, TError, TData>>, }
+export const getGetAllMovieInformationsForShowCreationQueryOptions = <TData = Awaited<ReturnType<typeof getAllMovieInformationsForShowCreation>>, TError = unknown>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAllMovieInformationsForShowCreation>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
 ) => {
 
-const {query: queryOptions} = options ?? {};
+const {query: queryOptions, request: requestOptions} = options ?? {};
 
   const queryKey =  queryOptions?.queryKey ?? getGetAllMovieInformationsForShowCreationQueryKey();
 
   
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getAllMovieInformationsForShowCreation>>> = ({ signal }) => getAllMovieInformationsForShowCreation({ signal });
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getAllMovieInformationsForShowCreation>>> = ({ signal }) => getAllMovieInformationsForShowCreation({ signal, ...requestOptions });
 
       
 
@@ -408,7 +410,7 @@ export function useGetAllMovieInformationsForShowCreation<TData = Awaited<Return
           TError,
           Awaited<ReturnType<typeof getAllMovieInformationsForShowCreation>>
         > , 'initialData'
-      >, }
+      >, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient
   ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 export function useGetAllMovieInformationsForShowCreation<TData = Awaited<ReturnType<typeof getAllMovieInformationsForShowCreation>>, TError = unknown>(
@@ -418,11 +420,11 @@ export function useGetAllMovieInformationsForShowCreation<TData = Awaited<Return
           TError,
           Awaited<ReturnType<typeof getAllMovieInformationsForShowCreation>>
         > , 'initialData'
-      >, }
+      >, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 export function useGetAllMovieInformationsForShowCreation<TData = Awaited<ReturnType<typeof getAllMovieInformationsForShowCreation>>, TError = unknown>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAllMovieInformationsForShowCreation>>, TError, TData>>, }
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAllMovieInformationsForShowCreation>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 /**
@@ -430,7 +432,7 @@ export function useGetAllMovieInformationsForShowCreation<TData = Awaited<Return
  */
 
 export function useGetAllMovieInformationsForShowCreation<TData = Awaited<ReturnType<typeof getAllMovieInformationsForShowCreation>>, TError = unknown>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAllMovieInformationsForShowCreation>>, TError, TData>>, }
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAllMovieInformationsForShowCreation>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient 
  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
 
@@ -490,16 +492,16 @@ export const getGetAllMoviesQueryKey = () => {
     }
 
     
-export const getGetAllMoviesQueryOptions = <TData = Awaited<ReturnType<typeof getAllMovies>>, TError = unknown>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAllMovies>>, TError, TData>>, }
+export const getGetAllMoviesQueryOptions = <TData = Awaited<ReturnType<typeof getAllMovies>>, TError = unknown>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAllMovies>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
 ) => {
 
-const {query: queryOptions} = options ?? {};
+const {query: queryOptions, request: requestOptions} = options ?? {};
 
   const queryKey =  queryOptions?.queryKey ?? getGetAllMoviesQueryKey();
 
   
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getAllMovies>>> = ({ signal }) => getAllMovies({ signal });
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getAllMovies>>> = ({ signal }) => getAllMovies({ signal, ...requestOptions });
 
       
 
@@ -519,7 +521,7 @@ export function useGetAllMovies<TData = Awaited<ReturnType<typeof getAllMovies>>
           TError,
           Awaited<ReturnType<typeof getAllMovies>>
         > , 'initialData'
-      >, }
+      >, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient
   ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 export function useGetAllMovies<TData = Awaited<ReturnType<typeof getAllMovies>>, TError = unknown>(
@@ -529,11 +531,11 @@ export function useGetAllMovies<TData = Awaited<ReturnType<typeof getAllMovies>>
           TError,
           Awaited<ReturnType<typeof getAllMovies>>
         > , 'initialData'
-      >, }
+      >, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 export function useGetAllMovies<TData = Awaited<ReturnType<typeof getAllMovies>>, TError = unknown>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAllMovies>>, TError, TData>>, }
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAllMovies>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 /**
@@ -541,7 +543,7 @@ export function useGetAllMovies<TData = Awaited<ReturnType<typeof getAllMovies>>
  */
 
 export function useGetAllMovies<TData = Awaited<ReturnType<typeof getAllMovies>>, TError = unknown>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAllMovies>>, TError, TData>>, }
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAllMovies>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient 
  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
 

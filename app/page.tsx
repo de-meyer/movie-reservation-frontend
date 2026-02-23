@@ -30,18 +30,12 @@ export default function Home() {
 
   useEffect(() => {
     if (isMeSuccess && meData) {
-      const rawUser = meData.data as any;
-      const name: string =
-        rawUser?.name || rawUser?.username || rawUser?.login || "User";
-      const id: string | undefined = rawUser?.id;
-      const avatarHash: string | undefined = rawUser?.avatar;
-      const avatar: string =
-        id && avatarHash
-          ? `https://cdn.discordapp.com/avatars/${id}/${avatarHash}.png`
-          : rawUser?.avatar_url ||
-            rawUser?.picture ||
-            `https://api.dicebear.com/9.x/initials/svg?seed=${encodeURIComponent(name)}`;
-      setUser({ name, avatar });
+      const { providerId, name, avatar } = meData;
+      const avatarUrl =
+        providerId && avatar
+          ? `https://cdn.discordapp.com/avatars/${providerId}/${avatar}.png`
+          : `https://api.dicebear.com/9.x/initials/svg?seed=${encodeURIComponent(name)}`;
+      setUser({ name, avatar: avatarUrl });
     } else if (isMeError) {
       setUser(null);
     }
