@@ -64,7 +64,9 @@ export function ProfileModal({
 
   if (!user) return null;
 
-  const upcomingReservations = reservations.filter((r) => r.status === "upcoming");
+  const upcomingReservations = reservations.filter(
+    (r) => r.status === "upcoming",
+  );
   const pastReservations = reservations.filter((r) => r.status === "past");
 
   const initials = user.name
@@ -78,7 +80,9 @@ export function ProfileModal({
         {/* Hidden accessible title */}
         <DialogHeader className="sr-only">
           <DialogTitle>My Account</DialogTitle>
-          <DialogDescription>Manage your profile and reservations</DialogDescription>
+          <DialogDescription>
+            Manage your profile and reservations
+          </DialogDescription>
         </DialogHeader>
 
         <div className="flex h-full min-h-[520px]">
@@ -87,14 +91,21 @@ export function ProfileModal({
             {/* User summary */}
             <div className="flex flex-col items-center gap-2 p-5 pb-4">
               <Avatar className="h-14 w-14 ring-2 ring-primary/20">
-                <AvatarImage src={user.avatar || "/placeholder.svg"} alt={user.name} />
+                <AvatarImage
+                  src={user.avatar || "/placeholder.svg"}
+                  alt={user.name}
+                />
                 <AvatarFallback className="bg-primary text-primary-foreground text-lg font-semibold">
                   {initials}
                 </AvatarFallback>
               </Avatar>
               <div className="text-center">
-                <p className="text-sm font-semibold text-foreground leading-tight">{user.name}</p>
-                <p className="text-xs text-muted-foreground mt-0.5">{user.email}</p>
+                <p className="text-sm font-semibold text-foreground leading-tight">
+                  {user.name}
+                </p>
+                <p className="text-xs text-muted-foreground mt-0.5">
+                  {user.email}
+                </p>
               </div>
             </div>
 
@@ -111,8 +122,7 @@ export function ProfileModal({
                     activeSection === id
                       ? "bg-primary text-primary-foreground"
                       : "text-muted-foreground hover:bg-secondary hover:text-foreground"
-                  }`}
-                >
+                  }`}>
                   <Icon className="h-4 w-4 shrink-0" />
                   {label}
                   {id === "reservations" && upcomingReservations.length > 0 && (
@@ -121,8 +131,7 @@ export function ProfileModal({
                         activeSection === id
                           ? "bg-primary-foreground/20 text-primary-foreground"
                           : "bg-primary/15 text-primary"
-                      }`}
-                    >
+                      }`}>
                       {upcomingReservations.length}
                     </span>
                   )}
@@ -171,7 +180,9 @@ function ProfileSection({
       <div className="flex flex-col gap-6 p-6">
         {/* Section header */}
         <div>
-          <h2 className="text-lg font-semibold text-foreground">Profile Information</h2>
+          <h2 className="text-lg font-semibold text-foreground">
+            Profile Information
+          </h2>
           <p className="text-xs text-muted-foreground mt-0.5">
             Member since {user.memberSince}
           </p>
@@ -197,8 +208,7 @@ function ProfileSection({
               <Button
                 variant="outline"
                 size="sm"
-                className="gap-2 border-destructive/30 text-destructive hover:bg-destructive hover:text-destructive-foreground"
-              >
+                className="gap-2 border-destructive/30 text-destructive hover:bg-destructive hover:text-destructive-foreground">
                 <Trash2 className="h-4 w-4" />
                 Delete My Account
               </Button>
@@ -207,16 +217,15 @@ function ProfileSection({
               <AlertDialogHeader>
                 <AlertDialogTitle>Delete your account?</AlertDialogTitle>
                 <AlertDialogDescription>
-                  This action cannot be undone. All your reservations, payment methods, and
-                  personal data will be permanently deleted.
+                  This action cannot be undone. All your reservations, payment
+                  methods, and personal data will be permanently deleted.
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>
                 <AlertDialogCancel>Cancel</AlertDialogCancel>
                 <AlertDialogAction
                   onClick={onDeleteAccount}
-                  className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
-                >
+                  className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
                   Yes, delete account
                 </AlertDialogAction>
               </AlertDialogFooter>
@@ -247,12 +256,16 @@ function ReservationsSection({
         {/* Upcoming */}
         <div>
           <div className="flex items-center justify-between mb-3">
-            <h2 className="text-lg font-semibold text-foreground">Upcoming Reservations</h2>
+            <h2 className="text-lg font-semibold text-foreground">
+              Upcoming Reservations
+            </h2>
             <Badge variant="secondary">{upcoming.length}</Badge>
           </div>
 
           {upcoming.length === 0 ? (
-            <p className="text-sm text-muted-foreground">No upcoming reservations.</p>
+            <p className="text-sm text-muted-foreground">
+              No upcoming reservations.
+            </p>
           ) : (
             <div className="flex flex-col gap-3">
               {upcoming.map((r) => (
@@ -267,8 +280,7 @@ function ReservationsSection({
           <button
             type="button"
             onClick={onToggleHistory}
-            className="flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
-          >
+            className="flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
             <History className="h-4 w-4" />
             {showHistory ? "Hide History" : "View History"}
             <ChevronRight
@@ -279,7 +291,9 @@ function ReservationsSection({
           {showHistory && (
             <div className="mt-3 flex flex-col gap-3">
               {past.length === 0 ? (
-                <p className="text-sm text-muted-foreground">No past reservations.</p>
+                <p className="text-sm text-muted-foreground">
+                  No past reservations.
+                </p>
               ) : (
                 past.map((r) => (
                   <ReservationCard key={r.id} reservation={r} isPast />
@@ -305,9 +319,10 @@ function ReservationCard({
   return (
     <div
       className={`flex gap-3 rounded-lg border bg-background p-3 ${
-        isPast ? "border-border opacity-60" : "border-border hover:border-primary/40"
-      } transition-colors`}
-    >
+        isPast
+          ? "border-border opacity-60"
+          : "border-border hover:border-primary/40"
+      } transition-colors`}>
       {/* Thumbnail */}
       <div className="relative h-20 w-14 shrink-0 overflow-hidden rounded-md bg-secondary">
         {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -320,7 +335,9 @@ function ReservationCard({
 
       {/* Info */}
       <div className="flex flex-1 flex-col justify-center gap-1 min-w-0">
-        <p className="text-sm font-semibold text-foreground truncate">{r.movieTitle}</p>
+        <p className="text-sm font-semibold text-foreground truncate">
+          {r.movieTitle}
+        </p>
         <div className="flex flex-col gap-0.5 text-xs text-muted-foreground">
           <span className="flex items-center gap-1.5">
             <Calendar className="h-3 w-3 shrink-0" />
@@ -339,7 +356,9 @@ function ReservationCard({
 
       {/* Right column */}
       <div className="flex flex-col items-end justify-between shrink-0">
-        <span className="text-sm font-semibold text-foreground">${r.totalPrice.toFixed(2)}</span>
+        <span className="text-sm font-semibold text-foreground">
+          ${r.totalPrice.toFixed(2)}
+        </span>
         <div className="flex flex-wrap justify-end gap-1">
           {r.seats.map((seat) => (
             <Badge key={seat} variant="outline" className="text-xs px-1.5 py-0">
