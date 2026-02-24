@@ -28,7 +28,10 @@ export function LoginDialog({ open, onOpenChange, onLogin }: LoginDialogProps) {
     // Mock login - in production this would call your Spring Boot backend
     onLogin({
       name: email.split("@")[0] || "Guest",
+      email: email,
+      memberSince: new Date().getFullYear().toString(),
       avatar: `https://api.dicebear.com/9.x/initials/svg?seed=${encodeURIComponent(email.split("@")[0] || "G")}`,
+      paymentMethods: [],
     });
     setEmail("");
     setPassword("");

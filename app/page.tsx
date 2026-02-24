@@ -30,12 +30,18 @@ export default function Home() {
 
   useEffect(() => {
     if (isMeSuccess && meData) {
-      const { providerId, name, avatar } = meData;
+      const { providerId, name, avatar, email } = meData;
       const avatarUrl =
         providerId && avatar
           ? `https://cdn.discordapp.com/avatars/${providerId}/${avatar}.png`
           : `https://api.dicebear.com/9.x/initials/svg?seed=${encodeURIComponent(name)}`;
-      setUser({ name, avatar: avatarUrl });
+      setUser({
+        name,
+        email: email ?? "",
+        memberSince: new Date().getFullYear().toString(),
+        avatar: avatarUrl,
+        paymentMethods: [],
+      });
     } else if (isMeError) {
       setUser(null);
     }

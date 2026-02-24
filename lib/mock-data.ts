@@ -17,10 +17,105 @@ export interface Showtime {
   date: string
 }
 
+export interface PaymentMethod {
+  id: string
+  type: "paypal"
+  email: string
+  isDefault: boolean
+}
+
 export interface User {
   name: string
+  email: string
+  phone?: string
+  memberSince: string
   avatar: string
+  paymentMethods: PaymentMethod[]
 }
+
+export interface Reservation {
+  id: string
+  movieId: string
+  movieTitle: string
+  movieThumbnail: string
+  theater: string
+  date: string
+  time: string
+  seats: string[]
+  totalPrice: number
+  status: "upcoming" | "past"
+}
+
+export const mockReservations: Reservation[] = [
+  {
+    id: "r1",
+    movieId: "1",
+    movieTitle: "Dune: Prophecy",
+    movieThumbnail: "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=600&h=900&fit=crop",
+    theater: "IMAX Theater 1",
+    date: new Date(Date.now() + 2 * 86400000).toLocaleDateString("en-US", {
+      weekday: "long",
+      month: "long",
+      day: "numeric",
+      year: "numeric",
+    }),
+    time: "20:45",
+    seats: ["G7", "G8"],
+    totalPrice: 34.0,
+    status: "upcoming",
+  },
+  {
+    id: "r2",
+    movieId: "3",
+    movieTitle: "Midnight Garden",
+    movieThumbnail: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=600&h=900&fit=crop",
+    theater: "Theater 4",
+    date: new Date(Date.now() + 5 * 86400000).toLocaleDateString("en-US", {
+      weekday: "long",
+      month: "long",
+      day: "numeric",
+      year: "numeric",
+    }),
+    time: "19:15",
+    seats: ["C4", "C5", "C6"],
+    totalPrice: 45.0,
+    status: "upcoming",
+  },
+  {
+    id: "r3",
+    movieId: "2",
+    movieTitle: "The Last Ember",
+    movieThumbnail: "https://images.unsplash.com/photo-1485846234645-a62644f84728?w=600&h=900&fit=crop",
+    theater: "Theater 2",
+    date: new Date(Date.now() - 10 * 86400000).toLocaleDateString("en-US", {
+      weekday: "long",
+      month: "long",
+      day: "numeric",
+      year: "numeric",
+    }),
+    time: "21:00",
+    seats: ["D3", "D4"],
+    totalPrice: 28.0,
+    status: "past",
+  },
+  {
+    id: "r4",
+    movieId: "4",
+    movieTitle: "Echoes of Steel",
+    movieThumbnail: "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=600&h=900&fit=crop",
+    theater: "IMAX Theater 1",
+    date: new Date(Date.now() - 20 * 86400000).toLocaleDateString("en-US", {
+      weekday: "long",
+      month: "long",
+      day: "numeric",
+      year: "numeric",
+    }),
+    time: "18:00",
+    seats: ["A1"],
+    totalPrice: 19.5,
+    status: "past",
+  },
+]
 
 const todayDate = new Date().toLocaleDateString("en-US", {
   weekday: "long",

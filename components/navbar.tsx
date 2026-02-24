@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { Film, Menu, X, LogIn, User, LogOut, Settings } from "lucide-react"
+import { Film, Menu, X, LogIn, User, LogOut } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import {
@@ -15,7 +15,9 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { LoginDialog } from "@/components/login-dialog"
-import type { User as UserType } from "@/lib/mock-data"
+import { ProfileModal } from "@/components/profile-modal"
+import type { User as UserType, Reservation } from "@/lib/mock-data"
+import { mockReservations } from "@/lib/mock-data"
 
 const navLinks = [
   { label: "Home", href: "#" },
@@ -33,6 +35,7 @@ interface NavbarProps {
 export function Navbar({ user, onLogin, onLogout }: NavbarProps) {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [loginOpen, setLoginOpen] = useState(false)
+  const [profileOpen, setProfileOpen] = useState(false)
 
   return (
     <>
@@ -87,13 +90,9 @@ export function Navbar({ user, onLogin, onLogout }: NavbarProps) {
                 <DropdownMenuContent align="end" className="w-48">
                   <DropdownMenuLabel className="text-foreground">{user.name}</DropdownMenuLabel>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem className="cursor-pointer">
+                  <DropdownMenuItem className="cursor-pointer" onClick={() => setProfileOpen(true)}>
                     <User className="mr-2 h-4 w-4" />
                     Profile
-                  </DropdownMenuItem>
-                  <DropdownMenuItem className="cursor-pointer">
-                    <Settings className="mr-2 h-4 w-4" />
-                    Settings
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem className="cursor-pointer" onClick={onLogout}>
@@ -147,6 +146,16 @@ export function Navbar({ user, onLogin, onLogout }: NavbarProps) {
       </header>
 
       <LoginDialog open={loginOpen} onOpenChange={setLoginOpen} onLogin={onLogin} />
+      <ProfileModal
+        user={user}
+        reservations={mockReservations}
+        open={profileOpen}
+        onOpenChange={setProfileOpen}
+        onDeleteAccount={() => {
+          onLogout()
+          setProfileOpen(false)
+        }}
+      />
     </>
   )
 }
