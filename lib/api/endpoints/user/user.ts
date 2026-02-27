@@ -6,16 +6,20 @@
  * OpenAPI spec version: 1.0.0
  */
 import {
+  useMutation,
   useQuery
 } from '@tanstack/react-query';
 import type {
   DataTag,
   DefinedInitialDataOptions,
   DefinedUseQueryResult,
+  MutationFunction,
   QueryClient,
   QueryFunction,
   QueryKey,
   UndefinedInitialDataOptions,
+  UseMutationOptions,
+  UseMutationResult,
   UseQueryOptions,
   UseQueryResult
 } from '@tanstack/react-query';
@@ -372,3 +376,93 @@ export function useMe<TData = Awaited<ReturnType<typeof me>>, TError = unknown>(
 
 
 
+/**
+ * Delete the currently authenticated user
+ * @summary Delete current user
+ */
+export type deleteMeResponse204 = {
+  data: void
+  status: 204
+}
+
+export type deleteMeResponse404 = {
+  data: void
+  status: 404
+}
+    
+export type deleteMeResponseSuccess = (deleteMeResponse204) & {
+  headers: Headers;
+};
+export type deleteMeResponseError = (deleteMeResponse404) & {
+  headers: Headers;
+};
+
+export type deleteMeResponse = (deleteMeResponseSuccess | deleteMeResponseError)
+
+export const getDeleteMeUrl = () => {
+
+
+  
+
+  return `/user/me`
+}
+
+export const deleteMe = async ( options?: RequestInit): Promise<deleteMeResponse> => {
+  
+  return customInstance<deleteMeResponse>(getDeleteMeUrl(),
+  {      
+    ...options,
+    method: 'DELETE'
+    
+    
+  }
+);}
+
+
+
+
+export const getDeleteMeMutationOptions = <TError = void,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteMe>>, TError,void, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof deleteMe>>, TError,void, TContext> => {
+
+const mutationKey = ['deleteMe'];
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof deleteMe>>, void> = () => {
+          
+
+          return  deleteMe(requestOptions)
+        }
+
+
+
+        
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type DeleteMeMutationResult = NonNullable<Awaited<ReturnType<typeof deleteMe>>>
+    
+    export type DeleteMeMutationError = void
+
+    /**
+ * @summary Delete current user
+ */
+export const useDeleteMe = <TError = void,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteMe>>, TError,void, TContext>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof deleteMe>>,
+        TError,
+        void,
+        TContext
+      > => {
+      return useMutation(getDeleteMeMutationOptions(options), queryClient);
+    }
+    
