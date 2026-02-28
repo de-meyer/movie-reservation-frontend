@@ -36,6 +36,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import type { User as UserType, Reservation } from "@/lib/mock-data";
+import { useDeleteMe } from "@/lib/api/endpoints/user/user";
 
 type Section = "profile" | "reservations";
 
@@ -175,6 +176,8 @@ function ProfileSection({
   user: UserType;
   onDeleteAccount: () => void;
 }) {
+  const { mutate: deleteMe } = useDeleteMe();
+
   return (
     <ScrollArea className="flex-1">
       <div className="flex flex-col gap-6 p-6">
@@ -224,7 +227,7 @@ function ProfileSection({
               <AlertDialogFooter>
                 <AlertDialogCancel>Cancel</AlertDialogCancel>
                 <AlertDialogAction
-                  onClick={onDeleteAccount}
+                  onClick={() => { deleteMe(); onDeleteAccount(); }}
                   className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
                   Yes, delete account
                 </AlertDialogAction>
