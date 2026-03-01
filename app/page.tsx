@@ -110,7 +110,19 @@ export default function Home() {
     setUser(loggedInUser);
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    try {
+      await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080"}/logout`,
+        {
+          method: "POST",
+          credentials: "include",
+        },
+      );
+    } catch {
+      // Ignore network errors - proceed with local logout regardless
+    }
+    localStorage.removeItem("authToken");
     setUser(null);
   };
 
