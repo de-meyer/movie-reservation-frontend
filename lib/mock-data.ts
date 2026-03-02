@@ -15,6 +15,8 @@ export interface Showtime {
   time: string
   theater: string
   date: string
+  rawDate?: string
+  showId?: string
 }
 
 export interface PaymentMethod {

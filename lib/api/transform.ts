@@ -25,6 +25,8 @@ export interface Showtime {
   time: string;
   theater: string;
   date: string;
+  rawDate: string;
+  showId?: string;
 }
 
 /**
@@ -38,6 +40,8 @@ export function transformProgramToMovie(program: ProgramResponse): Movie {
     time: formatShowTime(show.date),
     theater: show.theaterName,
     date: formatShowDate(show.date),
+    rawDate: show.date,
+    showId: show.id,
   }));
 
   return {
