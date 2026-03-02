@@ -9,7 +9,6 @@ import {
   Users,
   ChevronLeft,
   CheckCircle2,
-  Armchair,
 } from "lucide-react";
 import {
   Dialog,
@@ -60,8 +59,11 @@ export function MovieDetailModal({
   const { mutate: createReservation, isPending: isCreating } =
     useCreateReservation();
 
-  const theaters = theatersData?.data ?? (Array.isArray(theatersData) ? theatersData : []);
-  const reservations = reservationsData?.data ?? (Array.isArray(reservationsData) ? reservationsData : []);
+  const theaters =
+    theatersData?.data ?? (Array.isArray(theatersData) ? theatersData : []);
+  const reservations =
+    reservationsData?.data ??
+    (Array.isArray(reservationsData) ? reservationsData : []);
 
   const theater = theaters.find((t) => t.name === bookingShowtime?.theater);
   const capacity = theater?.capacity ?? 0;
