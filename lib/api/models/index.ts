@@ -15,6 +15,7 @@ export * from './movieCreationResponse';
 export * from './programResponse';
 export * from './reservationRequest';
 export * from './reservationResponse';
+export * from './seatResponse';
 export * from './showCreateRequest';
 export * from './showIdRequest';
 export * from './showResponse';
