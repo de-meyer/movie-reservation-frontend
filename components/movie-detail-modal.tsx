@@ -22,7 +22,11 @@ import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import type { Movie, Showtime } from "@/lib/mock-data";
-import { useListTheaters } from "@/lib/api/endpoints/theater-controller/theater-controller";
+import type { SeatResponse } from "@/lib/api/models";
+import {
+  useListTheaters,
+  useGetTheaterSeats,
+} from "@/lib/api/endpoints/theater-controller/theater-controller";
 import {
   useGetReservations,
   useCreateReservation,
@@ -44,7 +48,7 @@ export function MovieDetailModal({
 }: MovieDetailModalProps) {
   const [view, setView] = useState<ModalView>("detail");
   const [bookingShowtime, setBookingShowtime] = useState<Showtime | null>(null);
-  const [selectedSeat, setSelectedSeat] = useState<number | null>(null);
+  const [selectedSeat, setSelectedSeat] = useState<string | null>(null);
   const [bookingError, setBookingError] = useState<string | null>(null);
 
   const { data: meData } = useMe({ query: { retry: false } });
@@ -68,6 +72,25 @@ export function MovieDetailModal({
   const theater = theaters.find((t) => t.name === bookingShowtime?.theater);
   const capacity = theater?.capacity ?? 0;
 
+  const { data: theaterSeatsData, isLoading: isLoadingTheaterSeats } =
+    useGetTheaterSeats(theater?.id ?? "", {
+      query: { enabled: !!theater?.id },
+    });
+
+  const seats: SeatResponse[] =
+    theaterSeatsData?.data ??
+    (Array.isArray(theaterSeatsData) ? theaterSeatsData : []);
+
+  const seatsByRow = seats.reduce(
+    (acc, seat) => {
+      if (!acc[seat.row]) acc[seat.row] = [];
+      acc[seat.row].push(seat);
+      return acc;
+    },
+    {} as Record<string, SeatResponse[]>,
+  );
+  const sortedRows = Object.keys(seatsByRow).sort();
+
   const takenSeats = new Set(
     reservations
       .filter((r) => r.movieId === movie?.id)
@@ -88,15 +111,17 @@ export function MovieDetailModal({
     setBookingError(null);
   };
 
+  const selectedSeatObj = seats.find((s) => s.id === selectedSeat) ?? null;
+
   const handleConfirm = () => {
-    if (!selectedSeat || !theater?.id || !movie?.id) return;
+    if (!selectedSeatObj || !theater?.id || !movie?.id) return;
     setBookingError(null);
     createReservation(
       {
         data: {
           userId: meData?.id ?? "",
           theaterId: theater.id,
-          seatNumber: selectedSeat,
+          seatNumber: selectedSeatObj.number,
           movieId: movie.id,
           date: bookingShowtime?.rawDate ?? bookingShowtime?.date ?? "",
         },
@@ -130,9 +155,8 @@ export function MovieDetailModal({
     {} as Record<string, typeof movie.showtimes>,
   );
 
-  const seatsPerRow = 10;
-  const rows = Math.ceil(capacity / seatsPerRow);
-  const isLoadingSeats = isLoadingTheaters || isLoadingReservations;
+  const isLoadingSeats =
+    isLoadingTheaters || isLoadingReservations || isLoadingTheaterSeats;
 
   return (
     <Dialog open={open} onOpenChange={handleClose}>
@@ -320,44 +344,50 @@ export function MovieDetailModal({
                 <div className="flex items-center justify-center py-10 text-sm text-muted-foreground">
                   Loading seats…
                 </div>
-              ) : capacity === 0 ? (
+              ) : seats.length === 0 ? (
                 <div className="flex items-center justify-center py-10 text-sm text-muted-foreground">
                   Theater information unavailable
                 </div>
               ) : (
-                <div className="flex flex-col items-center gap-1.5">
+                <div className="flex flex-col items-center gap-2">
                   {/* Screen indicator */}
                   <div className="mb-2 w-3/4 rounded-sm bg-muted py-1 text-center text-xs text-muted-foreground tracking-widest">
                     SCREEN
                   </div>
-                  {Array.from({ length: rows }, (_, rowIdx) => (
-                    <div key={rowIdx} className="flex gap-1.5">
-                      {Array.from({ length: seatsPerRow }, (_, colIdx) => {
-                        const seatNum = rowIdx * seatsPerRow + colIdx + 1;
-                        if (seatNum > capacity) return null;
-                        const isTaken = takenSeats.has(seatNum);
-                        const isSelected = selectedSeat === seatNum;
-                        return (
-                          <button
-                            key={seatNum}
-                            type="button"
-                            disabled={isTaken}
-                            onClick={() =>
-                              setSelectedSeat(isSelected ? null : seatNum)
-                            }
-                            title={`Seat ${seatNum}${isTaken ? " (taken)" : ""}`}
-                            className={[
-                              "flex h-7 w-7 items-center justify-center rounded text-[10px] font-medium transition-colors",
-                              isTaken
-                                ? "cursor-not-allowed bg-muted-foreground/30 text-muted-foreground/50"
-                                : isSelected
-                                  ? "bg-primary text-primary-foreground shadow"
-                                  : "border border-border bg-background text-foreground hover:border-primary hover:bg-primary/10",
-                            ].join(" ")}>
-                            {seatNum}
-                          </button>
-                        );
-                      })}
+                  {sortedRows.map((row) => (
+                    <div key={row} className="flex items-center gap-1.5">
+                      <span className="w-4 shrink-0 text-right text-[10px] font-semibold text-muted-foreground">
+                        {row}
+                      </span>
+                      <div className="flex gap-1.5">
+                        {seatsByRow[row]
+                          .slice()
+                          .sort((a, b) => a.number - b.number)
+                          .map((seat) => {
+                            const isTaken = takenSeats.has(seat.number);
+                            const isSelected = selectedSeat === seat.id;
+                            return (
+                              <button
+                                key={seat.id}
+                                type="button"
+                                disabled={isTaken}
+                                onClick={() =>
+                                  setSelectedSeat(isSelected ? null : seat.id)
+                                }
+                                title={`${row}${seat.number}${isTaken ? " (taken)" : ""}`}
+                                className={[
+                                  "flex h-7 w-7 items-center justify-center rounded text-[10px] font-medium transition-colors",
+                                  isTaken
+                                    ? "cursor-not-allowed bg-muted-foreground/30 text-muted-foreground/50"
+                                    : isSelected
+                                      ? "bg-primary text-primary-foreground shadow"
+                                      : "border border-border bg-background text-foreground hover:border-primary hover:bg-primary/10",
+                                ].join(" ")}>
+                                {seat.number}
+                              </button>
+                            );
+                          })}
+                      </div>
                     </div>
                   ))}
                 </div>
@@ -372,12 +402,12 @@ export function MovieDetailModal({
               {/* Confirm button */}
               <Button
                 className="w-full"
-                disabled={!selectedSeat || isCreating || !theater?.id}
+                disabled={!selectedSeatObj || isCreating || !theater?.id}
                 onClick={handleConfirm}>
                 {isCreating
                   ? "Booking…"
-                  : selectedSeat
-                    ? `Confirm seat ${selectedSeat}`
+                  : selectedSeatObj
+                    ? `Confirm seat ${selectedSeatObj.row}${selectedSeatObj.number}`
                     : "Choose a seat to continue"}
               </Button>
             </div>
@@ -398,7 +428,9 @@ export function MovieDetailModal({
                 </span>{" "}
                 &middot; Seat{" "}
                 <span className="font-medium text-foreground">
-                  {selectedSeat}
+                  {selectedSeatObj
+                    ? `${selectedSeatObj.row}${selectedSeatObj.number}`
+                    : ""}
                 </span>
               </p>
               <p className="text-sm text-muted-foreground">
